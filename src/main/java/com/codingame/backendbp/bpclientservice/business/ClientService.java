@@ -33,7 +33,16 @@ public class ClientService {
         if (clientEntity.isPresent()) {
             return mapToClientResponse(clientEntity.get());
         } else {
-            return null;
+            throw new NotFoundException("El cliente no existe con id:" + id);
+        }
+    }
+
+    public ClientResponse getClientByName(String name) {
+        List<ClientEntity> clientEntity = clientRepository.findByName(name);
+        if (!clientEntity.isEmpty()) {
+            return mapToClientResponse(clientEntity.get(0));
+        } else {
+            throw new NotFoundException("El cliente no existe con nombre: " + name);
         }
     }
 
@@ -48,7 +57,7 @@ public class ClientService {
             ClientEntity clientEntity = clientRepository.save(new ClientEntity(client));
             return mapToClientResponse(clientEntity);
         } else {
-            throw new NotFoundException("Client not found with id: " + id);
+            throw new NotFoundException("El cliente no existe con id: " + id);
         }
     }
 
@@ -80,7 +89,7 @@ public class ClientService {
                     ClientEntity clientEntity = clientRepository.save(clientFound);
                     return mapToClientResponse(clientEntity);
                 })
-                .orElseThrow(() -> new NotFoundException("Cliente no encontrado con ID: " + id));
+                .orElseThrow(() -> new NotFoundException("El cliente no existe con id: " + id));
     }
 
     public void deleteClient(Long id) {

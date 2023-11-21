@@ -42,6 +42,11 @@ public class ClientController {
         return createOkResponse(clientService.getClientById(id), null, HttpStatus.OK);
     }
 
+    @GetMapping("/nombre/{name}")
+    public ResponseEntity<BaseResponse> getClientByName(@PathVariable String name) {
+        return createOkResponse(clientService.getClientByName(name), null, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<BaseResponse> saveClient(@RequestBody @Valid ClientRequest clientRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

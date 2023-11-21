@@ -45,7 +45,7 @@ public class ClientErrorHandlerController extends ResponseEntityExceptionHandler
     public ResponseEntity<BaseResponse> notFoundException(NotFoundException e) {
         LOGGER.error("Not Found exception", e);
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new BaseResponse(HttpStatus.NOT_FOUND.value(), "El cliente no existe"));
+                .body(new BaseResponse(HttpStatus.NOT_FOUND.value(), e.getMessage()));
     }
 
     @Override
