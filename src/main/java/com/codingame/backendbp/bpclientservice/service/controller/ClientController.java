@@ -48,7 +48,8 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> saveClient(@RequestBody @Valid ClientRequest clientRequest, BindingResult bindingResult) {
+    public ResponseEntity<BaseResponse> saveClient(@RequestBody @Valid ClientRequest clientRequest,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult);
         }
@@ -56,12 +57,17 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse> updateClient(@PathVariable Long id, @RequestBody @Valid ClientRequest clientRequest) {
+    public ResponseEntity<BaseResponse> updateClient(@PathVariable Long id,
+            @RequestBody @Valid ClientRequest clientRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException(bindingResult);
+        }
         return createOkResponse(clientService.updateClient(id, new Client(clientRequest)), null, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<BaseResponse> patchClient(@PathVariable Long id, @RequestBody ClientPatchRequest clientPatchRequest) {
+    public ResponseEntity<BaseResponse> patchClient(@PathVariable Long id,
+            @RequestBody ClientPatchRequest clientPatchRequest) {
         return createOkResponse(clientService.patchClient(id, new Client(clientPatchRequest)), null, HttpStatus.OK);
     }
 
@@ -73,7 +79,7 @@ public class ClientController {
 
     private ResponseEntity<BaseResponse> createOkResponse(Object data, String message, HttpStatus httpStatus) {
         BaseResponse baseResponse = new BaseResponse();
-        
+
         baseResponse.setMessage(message != null ? message : "Operacion Exitosa");
         baseResponse.setStatus(httpStatus.value());
         if (data != null) {
@@ -82,5 +88,5 @@ public class ClientController {
 
         return new ResponseEntity<>(baseResponse, httpStatus);
     }
-    
+
 }
