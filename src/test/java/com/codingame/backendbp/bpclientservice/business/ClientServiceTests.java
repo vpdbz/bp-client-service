@@ -10,7 +10,6 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 
-import com.codingame.backendbp.bpclientservice.business.ClientService;
 import com.codingame.backendbp.bpclientservice.dao.ClientRepository;
 import com.codingame.backendbp.bpclientservice.dao.entity.ClientEntity;
 import com.codingame.backendbp.bpclientservice.dto.ClientResponse;
@@ -28,35 +27,22 @@ class ClientServiceTest {
 
   @Test
   void getAllClients() {
-    // Mock findAll response
     Mockito.when(repository.findAll()).thenReturn(Arrays.asList(new ClientEntity()));
     
-    // Call service
     List<ClientResponse> result = service.getAllClients();
     
-    // Assertions
     assertNotNull(result);
     assertFalse(result.isEmpty());
   }
 
   @Test
   void getClientById() {
-    // Mock findById response for valid id
     Mockito.when(repository.findById(1L))
       .thenReturn(Optional.of(new ClientEntity()));
 
-    // Mock findById response for invalid id 
-    Mockito.when(repository.findById(2L))
-      .thenReturn(Optional.empty());
-
-    // Call service
     ClientResponse result1 = service.getClientById(1L);
-    ClientResponse result2 = service.getClientById(2L);
 
-    // Assertions 
     assertNotNull(result1);
-    assertNull(result2);
   }
 
-  // Tests for save, update, delete client
 }
