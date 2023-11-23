@@ -81,13 +81,6 @@
             <properties>
                 <spring.profiles.active>docker</spring.profiles.active>
             </properties>
-            <dependencies>
-	            <!-- Data Access:H2 (In memory) -->
-		        <dependency>
-		            <groupId>com.h2database</groupId>
-		            <artifactId>h2</artifactId>
-		        </dependency>
-            </dependencies>
         </profile>
 	</profiles>
 
